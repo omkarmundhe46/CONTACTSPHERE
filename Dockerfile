@@ -1,10 +1,14 @@
-#FROM openjdk:21
-#
-#WORKDIR /app
-#
-#COPY dist/scm2.0-0.0.1-SNAPSHOT.jar /app/scm2.0-0.0.1-SNAPSHOT.jar
-#
-#EXPOSE 8081
-#
-#ENTRYPOINT ["java", "-jar", "scm2.0-0.0.1-SNAPSHOT.jar"]
-#
+# Use official OpenJDK runtime as base image
+FROM openjdk:17-jdk-slim
+
+# Set working directory inside the container
+WORKDIR /app
+
+# Copy the built JAR file from target directory
+COPY target/scm2.0-*.jar app.jar
+
+# Expose the application port (must match server.port in application.properties)
+EXPOSE 8081
+
+# Run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]
